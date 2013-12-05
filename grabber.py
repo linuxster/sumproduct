@@ -15,7 +15,7 @@ import MySQLdb
 
 log_directory = 'log/'
 base_url = 'http://chartapi.finance.yahoo.com/instrument/1.0/{ticker}/chartdata;type=quote;range=1d/csv'
-conn = MySQLdb.connect(host = '128.31.7.93', user = 'zhk', passwd = 'g0373485x', db = 'stock', port = 3306)
+conn = MySQLdb.connect(host = '128.31.7.128', user = 'zhk', passwd = 'G0373485x', db = 'stock', port = 3306)
 table = 'stock'
 default_interval = 3
 
@@ -33,7 +33,7 @@ def grab_ticker(ticker):
         f.writelines(data)
         f.close()
         rows = []
-        for line in data[15:]:
+        for line in data[17:]:
             rows = rows + [ticker] + line.strip().split(',')
         if len(rows) == 0:
             with open("failed", "a") as myfile:
@@ -48,7 +48,7 @@ def grab_ticker(ticker):
     return True
 
 def grab_tickers(ticker):
-    interval = 0
+    interval = 1
     for ticker in tickers:
         while not grab_ticker(ticker):
             interval = interval * 3
@@ -59,10 +59,10 @@ def grab_tickers(ticker):
 
 if __name__ == '__main__':
     while True:
-        tickers = load_tickers('s&p')
+        tickers = load_tickers('stocks/s&p')
         grab_tickers(tickers)
-        tickers = load_tickers('bse')
+        tickers = load_tickers('stocks/bse')
         grab_tickers(tickers)
-        tickers = load_tickers('nse')
+        tickers = load_tickers('stocks/nse')
         grab_tickers(tickers)
         time.sleep((43200-int(time.time()))%86400)
