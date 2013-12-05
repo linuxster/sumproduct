@@ -10,7 +10,7 @@ Created on Oct 3, 2013
 # sz http://www.szse.cn/main/en/marketdata/stockinformation/
 
 import urllib2
-from time import gmtime, strftime, sleep
+from time import gmtime, strftime, sleep, time
 import MySQLdb
 
 log_directory = 'log/'
@@ -58,5 +58,11 @@ def grab_tickers(ticker):
         sleep(default_interval)
 
 if __name__ == '__main__':
-    tickers = load_tickers('s&p')
-    grab_tickers(tickers)
+    while True:
+        tickers = load_tickers('s&p')
+        grab_tickers(tickers)
+        tickers = load_tickers('bse')
+        grab_tickers(tickers)
+        tickers = load_tickers('nse')
+        grab_tickers(tickers)
+        time.sleep((43200-int(time.time()))%86400)
