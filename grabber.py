@@ -5,9 +5,10 @@ Created on Oct 3, 2013
 '''
 # nasdaq ftp://ftp.nasdaqtrader.com/
 # yahoo finance http://biz.yahoo.com/p/s_conameu.html
-# bo http://www.bseindia.com/markets/equity/EQReports/MarketWatch.aspx?expandable=2
+# bo http://www.bseindia.com/corporates/List_Scrips.aspx
 # ns http://www.nseindia.com/products/content/equities/equities/homepage_eq.htm
 # sz http://www.szse.cn/main/en/marketdata/stockinformation/
+# nasdaq http://www.nasdaq.com/screening/companies-by-name.aspx?letter=0&exchange=nyse&render=download
 
 import urllib2
 from time import gmtime, strftime, sleep, time
@@ -21,7 +22,7 @@ default_interval = 3
 
 def load_tickers(file_name, prefix = '', suffix = ''):
     f = open(file_name)
-    tickers = [prefix + x.strip() for x in f.readlines()]
+    tickers = [prefix + x.strip() + suffix for x in f.readlines()]
     return tickers
 
 def grab_ticker(ticker):
@@ -59,10 +60,10 @@ def grab_tickers(ticker):
 
 if __name__ == '__main__':
     while True:
+        time.sleep((43200-int(time.time()))%86400)
         tickers = load_tickers('stocks/s&p')
         grab_tickers(tickers)
-        tickers = load_tickers('stocks/bse')
+        tickers = load_tickers('stocks/bse', '', '.bo')
         grab_tickers(tickers)
-        tickers = load_tickers('stocks/nse')
+        tickers = load_tickers('stocks/nse', '', '.ns')
         grab_tickers(tickers)
-        time.sleep((43200-int(time.time()))%86400)
