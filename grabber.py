@@ -60,7 +60,7 @@ def grab_tickers(ticker):
 
 if __name__ == '__main__':
     while True:
-        time.sleep((43200-int(time.time()))%86400)
+        sleep((43200-int(time.time()))%86400)
         tickers = load_tickers('stocks/s&p')
         grab_tickers(tickers)
         tickers = load_tickers('stocks/bse', '', '.bo')
