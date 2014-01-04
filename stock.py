@@ -13,6 +13,11 @@ DB_PASS = 'G0373485x'
 
 class Stock(object):
     def __init__(self, ticker):
-        conn = MySQLdb.connect(host = DB_HOST, user = DB_USER, passwd = DB_PASS, db = DB_NAME, port = 3306)
-        
+        pass
+    
+    
+conn = MySQLdb.connect(host = DB_HOST, user = DB_USER, passwd = DB_PASS, db = DB_NAME, port = 3306)
+query = '''SELECT * FROM stock s WHERE ticker = '{}' '''
+query = query.format('MMM')
+
         
