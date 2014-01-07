@@ -42,7 +42,7 @@ def grab_ticker(ticker, log_directory):
         else:
             query = '''INSERT IGNORE INTO {} (ticker, timestamp, close, high, low, open, volume) VALUES ''' + ','.join(['''('{}', {}, {}, {}, {}, {}, {}) '''] * (len(rows) / 7))
             query = query.format(table, *rows)
-            conn = MySQLdb.connect(host = '128.31.7.128', user = 'zhk', passwd = 'G0373485x', db = 'stock', port = 3306)
+            conn = MySQLdb.connect(host = '127.0.0.1', user = 'zhk', passwd = 'G0373485x', db = 'stock', port = 3306)
             conn.cursor().execute(query)
     except Exception, e:
         print ticker, e
